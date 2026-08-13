@@ -1,17 +1,14 @@
 from datetime import *
-# from expenses import *
+from expenses import *
 from rich.console import Console
 from rich.table import Table
-expenses = [
-    {"Date": "2026-08-10", "Title": "Notebook", "Category": "school", "Amount": 24.90},
-    {"Date": "2026-08-11", "Title": "Coffee", "Category": "food", "Amount": 12.00},
-]
+import questionary
 
 
 def ask_for_expense(expenses: list):
-    Title=input("title: ")
-    Category=input("category: ")
-    Amount=input("amaount: ")
+    Title=questionary.text("title: ").ask()
+    Category=questionary.select("category: ",choices=["food", "travel","school","entertainment","other"]).ask()
+    Amount=questionary.text("amaount: ").ask()
     add_expense(expenses,Title,Amount,Category)
 
 def add_expense(expenses: list, title: str, amount: float,category: str):
@@ -19,16 +16,16 @@ def add_expense(expenses: list, title: str, amount: float,category: str):
     expenses.append({"Date":today, "Title":title, "Category":category,"Amount":amount})
 
 
-def show_expenses(expenses: list):
+def show_expenses(expenses: list):  
     tab=Table()
     tab.add_column("Date")
     tab.add_column("Title")
     tab.add_column("Category")
     tab.add_column("Amount")
     for expense in expenses:
-        tab.add_row(str(expense["Date"]),expense["Title"],expense["Category"],f"{float(expense["Amount"]):.2f}")
+        tab.add_row(str(expense["Date"]),str(expense["Title"]),str(expense["Category"]),f"{float(expense["Amount"]):.2f}")
     Console().print(tab)
-    Console().print(calculate_total(expenses),style="red")
+    Console().print(calculate_total(expenses),style="green")
 
 def calculate_total(expenses: list):
     total=0
@@ -43,7 +40,7 @@ def calculate_total(expenses: list):
 def main():
     show_expenses(expenses)
     while True:
-        add=input("do you want to add a expanse? ")
+        add=questionary.select("do you want to add a expanse? ",choices=["yes","no"]).ask()
         if add=="yes":
             ask_for_expense(expenses)
             show_expenses(expenses)
