@@ -1,7 +1,7 @@
 import yaml
-
+from expense_tracker.config import DATA_FILE
 def save_expenses(expenses):
-    with open("expenses.yaml","w") as file:
+    with open(DATA_FILE,"w") as file:
         yaml.safe_dump(expenses,file)
 
 def load_expenses():
