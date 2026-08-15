@@ -20,8 +20,6 @@ def show_table(expenses: list):
     Console().print(tab)
     total=(calculate_total(expenses))
     Console().print(f"total: {total}",style="blue")
-    if check_total(total):
-        Console().print("you are breaking out of the mould",style="red")
 
 
 def calculate_total(expenses: list):
