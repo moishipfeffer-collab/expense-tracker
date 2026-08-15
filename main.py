@@ -11,7 +11,7 @@ def add(title: str,amount: float,category: str):
 @app.command()
 def list():
     show_table(expenses)
-
+    show_report(expenses)
 @app.command()
 def category(category):
     show_report(expenses,category)
